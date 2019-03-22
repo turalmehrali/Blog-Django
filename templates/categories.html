@@ -1,0 +1,23 @@
+
+{% extends 'base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {% block link %}
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    {% endblock %}
+</head>
+<body>
+    {% block content %}
+
+        {% for category in categories_list %}
+
+            <a class="btn btn-outline-primary btn-lg btn-block" href="{{ category.get_absolute_url }}" >{{ category.category_name|linebreaks }}</a>
+
+        {% endfor %}
+    {% endblock %}
+</body>
+</html>

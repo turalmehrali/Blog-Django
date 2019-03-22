@@ -1,0 +1,134 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-blue-grey.css">
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    {% block link %}
+    {% endblock %}
+    <style>
+        html, body, h1, h2, h3, h4, h5 {
+            font-family: "Open Sans", sans-serif
+        }
+    </style>
+    <link rel="stylesheet" href="{% static 'base.css' %}">
+    <title>Blog_site</title>
+</head>
+<body class="w3-theme-l5">
+
+<!-- Navbar -->
+<div class="w3-top">
+    <div class="w3-bar w3-theme-d2 w3-left-align w3-large">
+        <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-theme-d2"
+           href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
+        <a href="{% url 'homepage' %}" class="w3-bar-item w3-button w3-padding-large w3-theme-d4"><i
+                class="fa fa-home w3-margin-right"></i>Blog</a>
+        <a href="{% url 'categories_list' %}" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="kateqoriya seçin"><i
+                class="fa fa-list-alt"></i> Kateqoriyalar</a>
+
+        {% if request.user.is_authenticated %}
+
+                <form action="{% url 'logout' %}" method="POST">
+                    {% csrf_token %}
+                    <button class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" type="submit">Çıxış</button>
+                </form>
+
+        {% endif %}
+        {% if not request.user.is_authenticated %}
+
+            <div class="w3-dropdown-hover w3-hide-small">
+                <button class="w3-button w3-padding-large" title="Hesab"><i class="fa fa-user"></i></button>
+                <div class="w3-dropdown-content w3-card-4 w3-bar-block" style="width:300px">
+                  <a href="{% url 'login' %}" class="w3-bar-item w3-button" title="Hesaba giriş"><i class="fa fa-sign-in"></i> Daxil ol</a>
+                  <a href="{% url 'signup' %}" class="w3-bar-item w3-button" title="Yeni Hesab"><i class="fa fa-user-plus"></i> Qeydiyyatdan keç</a>
+                </div>
+            </div>
+
+        {% endif %}
+        {% if request.user.is_authenticated %}
+                <a href="{% url 'article_create' %}" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Əlavə et"><i
+                class="fa fa-plus"></i> Məqalə yaz</a>
+        {% endif %}
+
+        {% if request.user.is_authenticated %}
+            <a href="{% url 'profile_view' username=user.username %}" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white" title="Hesabım">
+                <img src="{{ user.userprofile.profile_photo.url }}" class="w3-circle" style="height:23px;width:23px" alt="Avatar">
+            </a>
+        {% endif %}
+
+        <form class="form-inline my-2 my-lg-0" method="GET">
+            <input class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" type="search" placeholder="Axtarış.." aria-label="Search" name="axtaris"
+                   value="{{ request.GET.axtaris }}">
+            <button class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" type="submit"><i class="fa fa-search" aria-hidden="true"></i> Tap</button>
+        </form>
+
+    </div>
+</div>
+
+<!-- Navbar on small screens -->
+<div id="navDemo" class="w3-bar-block w3-theme-d2 w3-hide w3-hide-large w3-hide-medium w3-large">
+
+    {% if not request.user.is_authenticated %}
+
+        <a href="{% url 'login' %}" class="w3-bar-item w3-button w3-padding-large" title="Hesaba giriş"><i class="fa fa-sign-in"></i> Daxil ol</a>
+        <a href="{% url 'signup' %}" class="w3-bar-item w3-button w3-padding-large" title="Yeni Hesab"><i class="fa fa-user-plus"></i> Qeydiyyatdan keç</a>
+
+    {% endif %}
+
+    <a href="{% url 'categories_list' %}" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="kateqoriya seçin"><i
+                class="fa fa-list-alt"></i> Kateqoriyalar</a>
+
+    {% if request.user.is_authenticated %}
+        <a href="{% url 'article_create' %}" class="w3-bar-item w3-button w3-padding-large" title="Əlavə et"><i
+        class="fa fa-plus"></i> Məqalə yaz</a>
+    {% endif %}
+
+    {% if request.user.is_authenticated %}
+        <a href="{% url 'profile_view' username=user.username %}" class="w3-bar-item w3-button w3-padding-large"
+           title="Profil"><i class="fa fa-user"></i>
+        </a>
+    {% endif %}
+
+
+
+</div>
+
+<script>
+    // Accordion
+    function myFunction(id) {
+      var x = document.getElementById(id);
+      if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+        x.previousElementSibling.className += " w3-theme-d1";
+      } else {
+        x.className = x.className.replace("w3-show", "");
+        x.previousElementSibling.className =
+        x.previousElementSibling.className.replace(" w3-theme-d1", "");
+      }
+    }
+
+    // Used to toggle the menu on smaller screens when clicking on the menu button
+    function openNav() {
+      var x = document.getElementById("navDemo");
+      if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+      } else {
+        x.className = x.className.replace(" w3-show", "");
+      }
+    }
+</script>
+
+<div class="container">
+
+    {% block content %}
+    {% endblock %}
+    <br>
+</div>
+
+</body>
+</html>

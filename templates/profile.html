@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body>
+{% block content %}
+
+    <link rel="stylesheet" href="{% static 'profile.css' %}">
+
+    <!-- First Grid: Logo & About -->
+    <div class="w3-row">
+        <div class="w3-half w3-black w3-container w3-center" style="height:700px">
+            <div class="w3-padding-64">
+                <h1></h1>
+            </div>
+            <div class="w3-padding-64">
+                <a href="#" class="w3-button w3-black w3-block w3-hover-blue-grey w3-padding-16">Profil</a>
+                {% if user_profile.userprofile.user_type.id == 2 %}
+                    <a href="{% url 'user_articles' username=user_profile.username %}" class="w3-button w3-black w3-block w3-hover-teal w3-padding-16">Məqalələr</a>
+                {% endif %}
+                <a href="#biocontant" class="w3-button w3-black w3-block w3-hover-dark-grey w3-padding-16">Bioqrafiya</a>
+                <a href="#biocontant" class="w3-button w3-black w3-block w3-hover-brown w3-padding-16">Əlaqə</a>
+                {% if request.user == user_profile.userprofile.user %}
+                    <a href="{% url 'profile_edit' %}" class="w3-button w3-black w3-block w3-hover-brown w3-padding-16">Tənzimləmələr</a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="w3-half w3-blue-grey w3-container" style="height:700px">
+            <div class="w3-padding-64 w3-center">
+                <h1>{{ user_profile.first_name }} {{ user_profile.last_name }}</h1>
+                <img src="{{ user_profile.userprofile.profile_photo.url }}" class="w3-margin w3-circle" alt="Photo"
+                     style="width:50%">
+                <div class="w3-left-align w3-padding-large">
+
+                    <p>Ad: {{ user_profile.first_name }}</p>
+                    <p>Soyad: {{ user_profile.last_name }}</p>
+                    <p>Qoşulub: {{ user_profile.date_joined }}</p>
+                    <p>Son giriş: {{ user_profile.last_login }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Second Grid: Work & Resume -->
+    <div class="w3-row" id="biocontant">
+
+        <div class="w3-half w3-indigo w3-container" style="min-height:700px">
+            <div class="w3-padding-64 w3-center">
+                <h2>Bioqrafiya</h2>
+                <p></p>
+                <div class="w3-container w3-responsive">
+                    {{ user_profile.userprofile.bio }}
+                </div>
+            </div>
+        </div>
+
+        <div class="w3-half w3-dark-grey w3-container w3-center" style="height:700px">
+            <div class="w3-padding-64">
+                <h1>Əlaqə üçün..</h1>
+            </div>
+            <div class="w3-padding-64">
+                <p></p>
+                <!-- <p>Chicago, US</p> -->
+                <p>+994 70 868 67 99</p>
+                <p>{{ user_profile.email }}</p>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+
+</body>
+</html>

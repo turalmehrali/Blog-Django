@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {% block link %}
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    {% endblock %}
+
+</head>
+<body>
+{% block content %}
+    <form action="{% url 'login' %}" method="post"
+          style="width: 300px; ">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label" for="exampleCheck1">məni yadda saxla</label>
+        </div>
+        <button type="submit" class="btn btn-outline-primary">Giriş</button>
+    </form>
+{% endblock %}
+</body>
+</html>

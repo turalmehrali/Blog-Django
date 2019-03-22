@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ana Səhifə</title>
+
+</head>
+<body>
+{% block content %}
+    <link rel="stylesheet" href="{% static 'img.css' %}">
+    <!-- Page Container -->
+    <div class="w3-container w3-content" style="max-width:1400px;margin-top:80px">
+        <!-- The Grid -->
+        <div class="w3-row">
+            <!-- Left Column -->
+            <div class="w3-col m3">
+                <div class="w3-card w3-round w3-white w3-padding-16 w3-center">
+                    <p>ADS</p>
+                </div>
+                <br>
+
+                <div class="w3-card w3-round w3-white w3-padding-32 w3-center">
+                    <p><i class="fa fa-bug w3-xxlarge"></i></p>
+                </div>
+                <br>
+
+                <!-- Accordion -->
+
+
+                <!-- End Left Column -->
+            </div>
+
+            <!-- Middle Column -->
+            <div class="w3-col m7">
+                <div class="w3-container w3-card w3-white w3-round w3-margin">
+
+                    <p>ADS</p>
+
+                    <br>
+                </div>
+
+
+                <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
+                    <img src="{{ article.article_author.userprofile.profile_photo.url }}" alt="Avatar"
+                         class="w3-left w3-circle w3-margin-right" style="width:60px">
+                    <span class="w3-right w3-opacity">{{ article.publish_date|timesince }}</span>
+                    <p class="lead"><a
+                            href="{% url 'profile_view' username=article.article_author %}">@{{ article.article_author }}</a> {{ article.publish_date|timesince }}
+                        öncə</p><br>
+                    <p class="lead"><a
+                            href="{{ article.article_category.get_absolute_url }}">{{ article.article_category }}</a>
+                    </p>
+                    <hr class="w3-clear">
+                    <p>{{ article.title|linebreaks }}</p>
+                    {% if article.article_image %}
+                        <img src="{{ article.article_image.url }}" class="image-responsive">
+                    {% endif %}
+                    <p>{{ article.content|safe|linebreaks }}</p>
+                    <!-- <button type="button" class="w3-button w3-theme-d1 w3-margin-bottom"><i
+                            class="fa fa-thumbs-up"></i>Like({{ article.likes.count }})
+                    </button> -->
+                    <!-- <button type="button" class="w3-button w3-theme-d2 w3-margin-bottom"><i
+                            class="fa fa-comment"></i>
+                         Comment
+                    </button> -->
+
+                    {% if request.user == article.article_author %}
+                        <a class="w3-button w3-theme-d2 w3-margin-bottom" href="{{ article.get_update_url }}"
+                           role="button">Yenilə</a>
+                        <a class="w3-button w3-theme-d2 w3-margin-bottom" href="{{ article.get_delete_url }}"
+                           role="button">Sil</a>
+                    {% endif %}
+                </div>
+
+
+                <!-- End Middle Column -->
+            </div>
+
+            <!-- Right Column -->
+            <div class="w3-col m2">
+
+                <div class="w3-card w3-round w3-white w3-padding-16 w3-center">
+                    <p>ADS</p>
+                </div>
+                <br>
+
+                <div class="w3-card w3-round w3-white w3-padding-32 w3-center">
+                    <p><i class="fa fa-bug w3-xxlarge"></i></p>
+                </div>
+
+                <!-- End Right Column -->
+            </div>
+
+            <!-- End Grid -->
+        </div>
+
+        <!-- End Page Container -->
+    </div>
+    <br>
+
+
+{% endblock %}
+</body>
+</html>
