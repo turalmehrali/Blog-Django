@@ -1,0 +1,12 @@
+
+body {
+    padding-top: 80px;
+}
+.navbar{
+    padding-left: 100px;
+    padding-right: 100px;
+}
+
+li{
+    padding: 5px;
+}
